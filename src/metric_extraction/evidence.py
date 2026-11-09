@@ -3,7 +3,7 @@ import re
 from pathlib import Path
 
 NAMES = ["accuracy", "acc", r"f1(?:[- ]score)?", "f-score", "precision", "recall",
-         r"(?:roc[- ])?auc", "(?:sacre)?bleu", r"rouge[-_ ]?[12l]?", "meteor", "wer", "cer",
+         r"(?:roc[- ])?auc", "(?:sacre)?bleu", r"rouge[-_ ]?(?:lsum|[12l])?", "meteor", "wer", "cer",
          "perplexity", "ppl", r"exact[- ]match", "mrr", "ndcg", "spearman",
          "pearson", r"map(?=@\d)", "ap", "mcc", "mse", "rmse", "mae", "r2"]
 STRONG = "(?:" + "|".join(NAMES) + ")"
@@ -63,6 +63,41 @@ def table_hits(text: str) -> list[tuple[str, float]]:
     return hits
 
 
+EVAL_PREFIX = r"(?:eval|validation|val|test)[\s_-]*"
+HDR_CELL = re.compile(rf"^(?:{EVAL_PREFIX})?{QUALIFIER}{STRONG}{SUFFIX}$", re.I)
+
+
+def _cells(line: str) -> list[str]:
+    return [c.strip() for c in line.strip().strip("|").split("|")]
+
+
+def column_table_hits(text: str, last_only: bool = True) -> list[tuple[str, float]]:
+    """Tablas con las métricas como encabezado de columna (p. ej. 'Training results').
+
+    last_only=True toma solo la última fila (la época final), que es la que
+    suele coincidir con el model-index; False toma todas.
+    """
+    lines, hits, i = text.splitlines(), [], 0
+    while i < len(lines) - 2:
+        if lines[i].count("|") >= 2 and re.match(r"\s*\|?\s*:?-{2,}", lines[i + 1]):
+            cols = {j: re.sub(r"[\s_-]+", " ",
+                              re.sub(rf"^{EVAL_PREFIX}", "", h, flags=re.I).lower())
+                    for j, h in enumerate(_cells(lines[i])) if HDR_CELL.match(h)}
+            rows, k = [], i + 2
+            while k < len(lines) and lines[k].count("|") >= 2:
+                rows.append(_cells(lines[k]))
+                k += 1
+            if cols and rows:
+                for row in (rows[-1:] if last_only else rows):
+                    for j, name in cols.items():
+                        if j < len(row) and (c := CELL_NUM.match(row[j])):
+                            hits.append((name, float(c.group(1))))
+            i = k
+        else:
+            i += 1
+    return hits
+
+
 def extract_hits(text: str) -> list[tuple[str, float]]:
-    """Todas las coincidencias nombre-valor: en línea y en filas de tabla."""
-    return list(dict.fromkeys(inline_hits(text) + table_hits(text)))
+    """Todas las coincidencias nombre-valor: en línea, filas de tabla y columnas."""
+    return list(dict.fromkeys(inline_hits(text) + table_hits(text) + column_table_hits(text)))

@@ -3,12 +3,18 @@ import json
 import re
 
 
+# Campos que aparecen en el model-index pero no miden desempeño.
+NON_METRIC = re.compile(
+    r"active dims|sparsity ratio|flops|gen len|runtime|samples per second|steps per second",
+    re.I)
+
+
 def norm(name) -> str:
     """Normaliza un nombre de métrica: minúsculas y separadores a espacio."""
     return re.sub(r"[\s_\-]+", " ", str(name).strip().lower())
 
 
-def gold_tuples(performance_metrics) -> list[tuple[frozenset, float]]:
+def gold_tuples(performance_metrics, exclude_non_metrics: bool = True) -> list[tuple[frozenset, float]]:
     """[(alias, valor)] únicos del model-index.
 
     alias = {type, name} normalizados; así 'cosine_accuracy' y 'Cosine Accuracy'
@@ -31,6 +37,8 @@ def gold_tuples(performance_metrics) -> list[tuple[frozenset, float]]:
                     continue
                 aliases = frozenset(norm(x) for x in (m.get("type"), m.get("name")) if x)
                 key = (aliases, float(v))
+                if exclude_non_metrics and any(NON_METRIC.search(a) for a in aliases):
+                    continue
                 if aliases and key not in seen:
                     seen.add(key)
                     out.append(key)
