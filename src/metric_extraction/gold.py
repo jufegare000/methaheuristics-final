@@ -14,6 +14,24 @@ def norm(name) -> str:
     return re.sub(r"[\s_\-]+", " ", str(name).strip().lower())
 
 
+SYN = {"acc": "accuracy", "ppl": "perplexity"}
+
+
+def canon(name) -> str:
+    """Forma canónica: 'ROUGE-1'='rouge1', 'f1 macro'='macro f1', 'ndcg at 10'='ndcg@10'."""
+    s = str(name).lower()
+    s = re.sub(r"\s*\bat\b\s*", "@", s)
+    s = re.sub(r"\s*@\s*", "@", s)
+    s = re.sub(r"rouge[\s_-]*(1|2|lsum|l)\b", r"rouge\1", s)
+    toks = [SYN.get(t, t) for t in re.split(r"[\s_\-]+", s) if t]
+    return " ".join(sorted(toks))
+
+
+def same_metric(hit_name, aliases) -> bool:
+    h = canon(hit_name)
+    return any(canon(a) == h for a in aliases)
+
+
 def gold_tuples(performance_metrics, exclude_non_metrics: bool = True) -> list[tuple[frozenset, float]]:
     """[(alias, valor)] únicos del model-index.
 
@@ -58,6 +76,6 @@ def score_hits(hits, gold, rel: float = 0.01):
     recall = gold_recuperadas / n_gold, precisión = hits_correctas / n_hits.
     """
     hits = list(dict.fromkeys(hits))
-    rec = sum(any(n in al and value_close(v, rv, rel) for n, v in hits) for al, rv in gold)
-    ok = sum(any(n in al and value_close(v, rv, rel) for al, rv in gold) for n, v in hits)
+    rec = sum(any(same_metric(n, al) and value_close(v, rv, rel) for n, v in hits) for al, rv in gold)
+    ok = sum(any(same_metric(n, al) and value_close(v, rv, rel) for al, rv in gold) for n, v in hits)
     return rec, len(gold), ok, len(hits)
