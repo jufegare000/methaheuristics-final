@@ -1,0 +1,36 @@
+{
+  "rules": [
+    "row:clf_basic",
+    "row:clf_avg",
+    "row:rank",
+    "row:at_k",
+    "row:sim",
+    "row:rouge",
+    "row:bleu",
+    "row:reg",
+    "row:lm",
+    "column:clf_basic",
+    "column:clf_avg",
+    "column:rank",
+    "column:at_k",
+    "column:sim",
+    "column:rouge",
+    "column:bleu",
+    "column:reg",
+    "column:lm",
+    "inline:clf_basic",
+    "inline:clf_avg",
+    "inline:rank",
+    "inline:at_k",
+    "inline:sim",
+    "inline:rouge",
+    "inline:bleu",
+    "inline:reg",
+    "inline:lm"
+  ],
+  "theta": 100.0,
+  "meta": {
+    "K": 27,
+    "nota": "sin límite de K ni de tiempo"
+  }
+}

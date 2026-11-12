@@ -1,37 +1,350 @@
 modelId,tag,url,hits,juicio
-anasalashqar/autotrain-hhhh-61081134661,image-classification,https://huggingface.co/anasalashqar/autotrain-hhhh-61081134661,accuracy=0.975; precision=0.952; recall=1.0; auc=1.0; f1=0.976,
-andrewgray11/autotrain-solar-panel-object-detection-50559120777,image-classification,https://huggingface.co/andrewgray11/autotrain-solar-panel-object-detection-50559120777,accuracy=0.992; macro f1=0.641; micro f1=0.992; weighted f1=0.989; macro precision=0.619; micro precision=0.992; weighted precision=0.986; macro recall=0.667,
-lineups-io/autotrain-multifamily_v2-3736899404,image-classification,https://huggingface.co/lineups-io/autotrain-multifamily_v2-3736899404,accuracy=0.786; macro f1=0.781; micro f1=0.786; weighted f1=0.784; macro precision=0.811; micro precision=0.786; weighted precision=0.807; macro recall=0.779,
-micole66/autotrain-pachyderms-v2-2088767193,image-classification,https://huggingface.co/micole66/autotrain-pachyderms-v2-2088767193,accuracy=1.0; precision=1.0; recall=1.0; auc=1.0; f1=1.0,
-omarques/autotrain-flower-classifier-6-38061100888,image-classification,https://huggingface.co/omarques/autotrain-flower-classifier-6-38061100888,accuracy=0.99; macro f1=0.99; micro f1=0.99; weighted f1=0.99; macro precision=0.99; micro precision=0.99; weighted precision=0.99; macro recall=0.99,
-ceogpt/autotrain-test-cgpt-57734132886,image-classification,https://huggingface.co/ceogpt/autotrain-test-cgpt-57734132886,accuracy=0.882; precision=0.0; recall=0.0; auc=0.567; f1=0.0,
-DM000/test,image-classification,https://huggingface.co/DM000/test,accuracy=0.915; macro f1=0.915; micro f1=0.915; weighted f1=0.915; macro precision=0.917; micro precision=0.915; weighted precision=0.917; macro recall=0.915,
-acrowth/autotrain-touringsummary-49428119370,summarization,https://huggingface.co/acrowth/autotrain-touringsummary-49428119370,rouge1=50.271; rouge2=34.882; rougel=46.325; rougelsum=46.29,
-DmitriyVasiliev/autotrain-xls-mt5-rua-par-rua-sent-dia-56800131755,summarization,https://huggingface.co/DmitriyVasiliev/autotrain-xls-mt5-rua-par-rua-sent-dia-56800131755,rouge1=4.517; rouge2=1.694; rougel=4.556; rougelsum=4.55,
-awacke1/autotrain-livespeechrecognitiontrainingmodelforautotrain-1786761993,summarization,https://huggingface.co/awacke1/autotrain-livespeechrecognitiontrainingmodelforautotrain-1786761993,rouge1=27.015; rouge2=19.303; rougel=25.245; rougelsum=26.593,
-YtBig/html-bart-78.8,summarization,https://huggingface.co/YtBig/html-bart-78.8,rouge1=78.85; rouge2=73.326; rougel=78.683; rougelsum=78.683,
-MarketingHHM/autotrain-hhmleoom-68141137239,summarization,https://huggingface.co/MarketingHHM/autotrain-hhmleoom-68141137239,rouge1=37.229; rouge2=25.158; rougel=30.977; rougelsum=34.945,
-xFahrenheit/autotrain-mbart25-3000-hin-en-50671120937,summarization,https://huggingface.co/xFahrenheit/autotrain-mbart25-3000-hin-en-50671120937,rouge1=24.69; rouge2=9.961; rougel=19.17; rougelsum=21.73,
-reachosen/autotrain-palv1-76806140361,tabular-classification,https://huggingface.co/reachosen/autotrain-palv1-76806140361,accuracy=0.919; precision=1.0; recall=0.667; auc=0.978; f1=0.8,
-farouk97/autotrain-test7-2644pc-linearregr-38619101723,tabular-regression,https://huggingface.co/farouk97/autotrain-test7-2644pc-linearregr-38619101723,r2=0.0; mse=0.021; mae=0.099,
-milyiyo/autotrain-iptc-classification-v4-42015107919,text-classification,https://huggingface.co/milyiyo/autotrain-iptc-classification-v4-42015107919,accuracy=0.758; macro f1=0.531; micro f1=0.758; weighted f1=0.708; macro precision=0.532; micro precision=0.758; weighted precision=0.685; macro recall=0.553,
-gitsasat/autotrain-chat-detect-50469120569,text-classification,https://huggingface.co/gitsasat/autotrain-chat-detect-50469120569,accuracy=0.973; precision=0.995; recall=0.95; auc=0.994; f1=0.972,
-maxzancanaro/autotrain-l_amendment_207-95256146319,text-classification,https://huggingface.co/maxzancanaro/autotrain-l_amendment_207-95256146319,accuracy=0.905; precision=0.909; recall=0.909; auc=0.98; f1=0.909,
-claudio-cyberg0n/autotrain-cve-sa-numeriarrotondati-51372121776,text-classification,https://huggingface.co/claudio-cyberg0n/autotrain-cve-sa-numeriarrotondati-51372121776,accuracy=0.57; macro f1=0.474; micro f1=0.57; weighted f1=0.561; macro precision=0.506; micro precision=0.57; weighted precision=0.564; macro recall=0.462,
-sasha/autotrain-DistilBERT-TweetEval-1281148993,text-classification,https://huggingface.co/sasha/autotrain-DistilBERT-TweetEval-1281148993,accuracy=0.734; macro f1=0.716; micro f1=0.734; weighted f1=0.734; macro precision=0.73; micro precision=0.734; weighted precision=0.736; macro recall=0.706,
-fathyshalab/autotrain-reklam-filtered-3631097041,text-classification,https://huggingface.co/fathyshalab/autotrain-reklam-filtered-3631097041,accuracy=0.563; macro f1=0.175; micro f1=0.563; weighted f1=0.498; macro precision=0.179; micro precision=0.563; weighted precision=0.456; macro recall=0.181,
-guriko/autotrain-cv_resume-56492130967,text-classification,https://huggingface.co/guriko/autotrain-cv_resume-56492130967,accuracy=0.933; macro f1=0.931; micro f1=0.933; weighted f1=0.933; macro precision=0.953; micro precision=0.933; weighted precision=0.946; macro recall=0.922,
-librarian-bots/model-card-dataset-mentions,text-classification,https://huggingface.co/librarian-bots/model-card-dataset-mentions,accuracy=1.0; precision=1.0; recall=1.0; auc=1.0; f1=1.0,
-vkheman/autotrain-multic-42139108182,text-classification,https://huggingface.co/vkheman/autotrain-multic-42139108182,accuracy=0.836; macro f1=0.835; micro f1=0.836; weighted f1=0.836; macro precision=0.839; micro precision=0.836; weighted precision=0.84; macro recall=0.836,
-okaris/autotrain-hate-speech-3k-89642143970,text-classification,https://huggingface.co/okaris/autotrain-hate-speech-3k-89642143970,mse=1.768; mae=1.007; r2=0.604; rmse=1.33,
-Sushovan/autotrain-test-text-classification-3175589570,text-classification,https://huggingface.co/Sushovan/autotrain-test-text-classification-3175589570,accuracy=0.665; macro f1=0.424; micro f1=0.665; weighted f1=0.638; macro precision=0.427; micro precision=0.665; weighted precision=0.622; macro recall=0.434,
-maxzancanaro/autotrain-termination_266-93768145909,text-classification,https://huggingface.co/maxzancanaro/autotrain-termination_266-93768145909,accuracy=0.815; precision=0.758; recall=0.926; auc=0.929; f1=0.833,
-suresh-subramanian/autotrain-fake-news-1649058542,text-classification,https://huggingface.co/suresh-subramanian/autotrain-fake-news-1649058542,accuracy=0.637; precision=1.0; recall=0.02; auc=0.652; f1=0.039,
-semantixai/Lloro,text-generation,https://huggingface.co/semantixai/Lloro,rouge l=0.6717,
-cross-encoder-testing/reranker-bert-tiny-gooaq-bce,text-ranking,https://huggingface.co/cross-encoder-testing/reranker-bert-tiny-gooaq-bce,mrr@10=0.5558; ndcg@10=0.6157; mrr@10=0.4486; ndcg@10=0.4313,
-teacookies/autotrain-21-12-2022_overspeed_governor-2557878199,token-classification,https://huggingface.co/teacookies/autotrain-21-12-2022_overspeed_governor-2557878199,accuracy=1.0; precision=0.99; recall=0.993; f1=0.992,
-teacookies/autotrain-24102022-cert9-1861563662,token-classification,https://huggingface.co/teacookies/autotrain-24102022-cert9-1861563662,accuracy=0.999; precision=0.959; recall=0.969; f1=0.964,
-Andrei95/jobbert-skill,token-classification,https://huggingface.co/Andrei95/jobbert-skill,accuracy=0.935; precision=0.299; recall=0.442; f1=0.357,
-Tritkoman/EnglishtoChurchSlavonicV1,translation,https://huggingface.co/Tritkoman/EnglishtoChurchSlavonicV1,sacrebleu=2.851,
-Tritkoman/GermantoHunsrik,translation,https://huggingface.co/Tritkoman/GermantoHunsrik,sacrebleu=30.765,
-Tritkoman/English-to-Aramaic-or-Syriac,translation,https://huggingface.co/Tritkoman/English-to-Aramaic-or-Syriac,sacrebleu=0.819,
+anasalashqar/autotrain-hhhh-61081134661,image-classification,https://huggingface.co/anasalashqar/autotrain-hhhh-61081134661,accuracy=0.975; precision=0.952; recall=1.0; auc=1.0; f1=0.976,"Loss: 0.491
+Accuracy: 0.975
+Precision: 0.952
+Recall: 1.000
+AUC: 1.000
+F1: 0.976
+"
+andrewgray11/autotrain-solar-panel-object-detection-50559120777,image-classification,https://huggingface.co/andrewgray11/autotrain-solar-panel-object-detection-50559120777,accuracy=0.992; macro f1=0.641; micro f1=0.992; weighted f1=0.989; macro precision=0.619; micro precision=0.992; weighted precision=0.986; macro recall=0.667,"Loss: 0.033
+Accuracy: 0.992
+Macro F1: 0.641
+Micro F1: 0.992
+Weighted F1: 0.989
+Macro Precision: 0.619
+Micro Precision: 0.992
+Weighted Precision: 0.986
+Macro Recall: 0.667
+Micro Recall: 0.992
+Weighted Recall: 0.992
+"
+lineups-io/autotrain-multifamily_v2-3736899404,image-classification,https://huggingface.co/lineups-io/autotrain-multifamily_v2-3736899404,accuracy=0.786; macro f1=0.781; micro f1=0.786; weighted f1=0.784; macro precision=0.811; micro precision=0.786; weighted precision=0.807; macro recall=0.779,"Loss: 0.665
+Accuracy: 0.786
+Macro F1: 0.781
+Micro F1: 0.786
+Weighted F1: 0.784
+Macro Precision: 0.811
+Micro Precision: 0.786
+Weighted Precision: 0.807
+Macro Recall: 0.779
+Micro Recall: 0.786
+Weighted Recall: 0.786
+"
+micole66/autotrain-pachyderms-v2-2088767193,image-classification,https://huggingface.co/micole66/autotrain-pachyderms-v2-2088767193,accuracy=1.0; precision=1.0; recall=1.0; auc=1.0; f1=1.0,"Loss: 0.004
+Accuracy: 1.000
+Precision: 1.000
+Recall: 1.000
+AUC: 1.000
+F1: 1.000
+"
+omarques/autotrain-flower-classifier-6-38061100888,image-classification,https://huggingface.co/omarques/autotrain-flower-classifier-6-38061100888,accuracy=0.99; macro f1=0.99; micro f1=0.99; weighted f1=0.99; macro precision=0.99; micro precision=0.99; weighted precision=0.99; macro recall=0.99,"Loss: 0.017
+Accuracy: 0.990
+Macro F1: 0.990
+Micro F1: 0.990
+Weighted F1: 0.990
+Macro Precision: 0.990
+Micro Precision: 0.990
+Weighted Precision: 0.990
+Macro Recall: 0.990
+Micro Recall: 0.990
+Weighted Recall: 0.990
+"
+ceogpt/autotrain-test-cgpt-57734132886,image-classification,https://huggingface.co/ceogpt/autotrain-test-cgpt-57734132886,accuracy=0.882; precision=0.0; recall=0.0; auc=0.567; f1=0.0,"Loss: 0.392
+Accuracy: 0.882
+Precision: 0.000
+Recall: 0.000
+AUC: 0.567
+F1: 0.000
+"
+DM000/test,image-classification,https://huggingface.co/DM000/test,accuracy=0.915; macro f1=0.915; micro f1=0.915; weighted f1=0.915; macro precision=0.917; micro precision=0.915; weighted precision=0.917; macro recall=0.915,"Loss: 0.301
+Accuracy: 0.915
+Macro F1: 0.915
+Micro F1: 0.915
+Weighted F1: 0.915
+Macro Precision: 0.917
+Micro Precision: 0.915
+Weighted Precision: 0.917
+Macro Recall: 0.915
+Micro Recall: 0.915
+Weighted Recall: 0.915
+"
+acrowth/autotrain-touringsummary-49428119370,summarization,https://huggingface.co/acrowth/autotrain-touringsummary-49428119370,rouge1=50.271; rouge2=34.882; rougel=46.325; rougelsum=46.29,"Loss: 0.941
+Rouge1: 50.271
+Rouge2: 34.882
+RougeL: 46.325
+RougeLsum: 46.290
+Gen Len: 18.988
+"
+DmitriyVasiliev/autotrain-xls-mt5-rua-par-rua-sent-dia-56800131755,summarization,https://huggingface.co/DmitriyVasiliev/autotrain-xls-mt5-rua-par-rua-sent-dia-56800131755,rouge1=4.517; rouge2=1.694; rougel=4.556; rougelsum=4.55,"Loss: 1.627
+Rouge1: 4.517
+Rouge2: 1.694
+RougeL: 4.556
+RougeLsum: 4.550
+Gen Len: 29.800
+"
+awacke1/autotrain-livespeechrecognitiontrainingmodelforautotrain-1786761993,summarization,https://huggingface.co/awacke1/autotrain-livespeechrecognitiontrainingmodelforautotrain-1786761993,rouge1=27.015; rouge2=19.303; rougel=25.245; rougelsum=26.593,"Loss: 0.696
+Rouge1: 27.015
+Rouge2: 19.303
+RougeL: 25.245
+RougeLsum: 26.593
+Gen Len: 18.581
+ 
+"
+YtBig/html-bart-78.8,summarization,https://huggingface.co/YtBig/html-bart-78.8,rouge1=78.85; rouge2=73.326; rougel=78.683; rougelsum=78.683,"Loss: 0.201
+Rouge1: 78.850
+Rouge2: 73.326
+RougeL: 78.683
+RougeLsum: 78.683
+Gen Len: 17.217
+"
+MarketingHHM/autotrain-hhmleoom-68141137239,summarization,https://huggingface.co/MarketingHHM/autotrain-hhmleoom-68141137239,rouge1=37.229; rouge2=25.158; rougel=30.977; rougelsum=34.945,"Loss: 0.796
+Rouge1: 37.229
+Rouge2: 25.158
+RougeL: 30.977
+RougeLsum: 34.945
+Gen Len: 107.979
+"
+xFahrenheit/autotrain-mbart25-3000-hin-en-50671120937,summarization,https://huggingface.co/xFahrenheit/autotrain-mbart25-3000-hin-en-50671120937,rouge1=24.69; rouge2=9.961; rougel=19.17; rougelsum=21.73,"Loss: 2.166
+Rouge1: 24.690
+Rouge2: 9.961
+RougeL: 19.170
+RougeLsum: 21.730
+Gen Len: 77.668
+"
+reachosen/autotrain-palv1-76806140361,tabular-classification,https://huggingface.co/reachosen/autotrain-palv1-76806140361,accuracy=0.919; precision=1.0; recall=0.667; auc=0.978; f1=0.8,"Loss: 0.192
+Accuracy: 0.919
+Precision: 1.000
+Recall: 0.667
+AUC: 0.978
+F1: 0.800
+"
+farouk97/autotrain-test7-2644pc-linearregr-38619101723,tabular-regression,https://huggingface.co/farouk97/autotrain-test7-2644pc-linearregr-38619101723,r2=0.0; mse=0.021; mae=0.099,"Loss: 0.145
+R2: 0.000
+MSE: 0.021
+MAE: 0.099
+RMSLE: 0.101
+ 
+"
+milyiyo/autotrain-iptc-classification-v4-42015107919,text-classification,https://huggingface.co/milyiyo/autotrain-iptc-classification-v4-42015107919,accuracy=0.758; macro f1=0.531; micro f1=0.758; weighted f1=0.708; macro precision=0.532; micro precision=0.758; weighted precision=0.685; macro recall=0.553,"Loss: 1.231
+Accuracy: 0.758
+Macro F1: 0.531
+Micro F1: 0.758
+Weighted F1: 0.708
+Macro Precision: 0.532
+Micro Precision: 0.758
+Weighted Precision: 0.685
+Macro Recall: 0.553
+Micro Recall: 0.758
+Weighted Recall: 0.758
+"
+gitsasat/autotrain-chat-detect-50469120569,text-classification,https://huggingface.co/gitsasat/autotrain-chat-detect-50469120569,accuracy=0.973; precision=0.995; recall=0.95; auc=0.994; f1=0.972,"Loss: 0.094
+Accuracy: 0.973
+Precision: 0.995
+Recall: 0.950
+AUC: 0.994
+F1: 0.972
+"
+maxzancanaro/autotrain-l_amendment_207-95256146319,text-classification,https://huggingface.co/maxzancanaro/autotrain-l_amendment_207-95256146319,accuracy=0.905; precision=0.909; recall=0.909; auc=0.98; f1=0.909,"Loss: 0.203
+Accuracy: 0.905
+Precision: 0.909
+Recall: 0.909
+AUC: 0.980
+F1: 0.909
+ 
+"
+claudio-cyberg0n/autotrain-cve-sa-numeriarrotondati-51372121776,text-classification,https://huggingface.co/claudio-cyberg0n/autotrain-cve-sa-numeriarrotondati-51372121776,accuracy=0.57; macro f1=0.474; micro f1=0.57; weighted f1=0.561; macro precision=0.506; micro precision=0.57; weighted precision=0.564; macro recall=0.462,"Loss: 1.324
+Accuracy: 0.570
+Macro F1: 0.474
+Micro F1: 0.570
+Weighted F1: 0.561
+Macro Precision: 0.506
+Micro Precision: 0.570
+Weighted Precision: 0.564
+Macro Recall: 0.462
+Micro Recall: 0.570
+Weighted Recall: 0.570
+"
+sasha/autotrain-DistilBERT-TweetEval-1281148993,text-classification,https://huggingface.co/sasha/autotrain-DistilBERT-TweetEval-1281148993,accuracy=0.734; macro f1=0.716; micro f1=0.734; weighted f1=0.734; macro precision=0.73; micro precision=0.734; weighted precision=0.736; macro recall=0.706,"Loss: 0.602
+Accuracy: 0.734
+Macro F1: 0.716
+Micro F1: 0.734
+Weighted F1: 0.734
+Macro Precision: 0.730
+Micro Precision: 0.734
+Weighted Precision: 0.736
+Macro Recall: 0.706
+Micro Recall: 0.734
+Weighted Recall: 0.734
+"
+fathyshalab/autotrain-reklam-filtered-3631097041,text-classification,https://huggingface.co/fathyshalab/autotrain-reklam-filtered-3631097041,accuracy=0.563; macro f1=0.175; micro f1=0.563; weighted f1=0.498; macro precision=0.179; micro precision=0.563; weighted precision=0.456; macro recall=0.181,"Loss: 1.549
+Accuracy: 0.563
+Macro F1: 0.175
+Micro F1: 0.563
+Weighted F1: 0.498
+Macro Precision: 0.179
+Micro Precision: 0.563
+Weighted Precision: 0.456
+Macro Recall: 0.181
+Micro Recall: 0.563
+Weighted Recall: 0.563
+"
+guriko/autotrain-cv_resume-56492130967,text-classification,https://huggingface.co/guriko/autotrain-cv_resume-56492130967,accuracy=0.933; macro f1=0.931; micro f1=0.933; weighted f1=0.933; macro precision=0.953; micro precision=0.933; weighted precision=0.946; macro recall=0.922,"Loss: 0.407
+Accuracy: 0.933
+Macro F1: 0.931
+Micro F1: 0.933
+Weighted F1: 0.933
+Macro Precision: 0.953
+Micro Precision: 0.933
+Weighted Precision: 0.946
+Macro Recall: 0.922
+Micro Recall: 0.933
+Weighted Recall: 0.933
+ 
+"
+librarian-bots/model-card-dataset-mentions,text-classification,https://huggingface.co/librarian-bots/model-card-dataset-mentions,accuracy=1.0; precision=1.0; recall=1.0; auc=1.0; f1=1.0,"Loss: 0.000
+Accuracy: 1.000
+Precision: 1.000
+Recall: 1.000
+AUC: 1.000
+F1: 1.000
+"
+vkheman/autotrain-multic-42139108182,text-classification,https://huggingface.co/vkheman/autotrain-multic-42139108182,accuracy=0.836; macro f1=0.835; micro f1=0.836; weighted f1=0.836; macro precision=0.839; micro precision=0.836; weighted precision=0.84; macro recall=0.836,"Loss: 0.758
+Accuracy: 0.836
+Macro F1: 0.835
+Micro F1: 0.836
+Weighted F1: 0.836
+Macro Precision: 0.839
+Micro Precision: 0.836
+Weighted Precision: 0.840
+Macro Recall: 0.836
+Micro Recall: 0.836
+Weighted Recall: 0.836
+"
+okaris/autotrain-hate-speech-3k-89642143970,text-classification,https://huggingface.co/okaris/autotrain-hate-speech-3k-89642143970,mse=1.768; mae=1.007; r2=0.604; rmse=1.33,"Loss: 1.768
+MSE: 1.768
+MAE: 1.007
+R2: 0.604
+RMSE: 1.330
+Explained Variance: 0.614
+ 
+"
+Sushovan/autotrain-test-text-classification-3175589570,text-classification,https://huggingface.co/Sushovan/autotrain-test-text-classification-3175589570,accuracy=0.665; macro f1=0.424; micro f1=0.665; weighted f1=0.638; macro precision=0.427; micro precision=0.665; weighted precision=0.622; macro recall=0.434,"Loss: 1.111
+Accuracy: 0.665
+Macro F1: 0.424
+Micro F1: 0.665
+Weighted F1: 0.638
+Macro Precision: 0.427
+Micro Precision: 0.665
+Weighted Precision: 0.622
+Macro Recall: 0.434
+Micro Recall: 0.665
+Weighted Recall: 0.665
+ 
+"
+maxzancanaro/autotrain-termination_266-93768145909,text-classification,https://huggingface.co/maxzancanaro/autotrain-termination_266-93768145909,accuracy=0.815; precision=0.758; recall=0.926; auc=0.929; f1=0.833,"Loss: 0.404
+Accuracy: 0.815
+Precision: 0.758
+Recall: 0.926
+AUC: 0.929
+F1: 0.833
+"
+suresh-subramanian/autotrain-fake-news-1649058542,text-classification,https://huggingface.co/suresh-subramanian/autotrain-fake-news-1649058542,accuracy=0.637; precision=1.0; recall=0.02; auc=0.652; f1=0.039,"Loss: 0.624
+Accuracy: 0.637
+Precision: 1.000
+Recall: 0.020
+AUC: 0.652
+F1: 0.039
+"
+semantixai/Lloro,text-generation,https://huggingface.co/semantixai/Lloro,rouge l=0.6717,"Modelo
+LLM as Judge
+Code Bleu Score
+Rouge-L
+CodeBert- Precision
+CodeBert-Recall
+CodeBert-F1
+CodeBert-F3
+GPT 3.5
+94.29%
+0.3538
+0.3756
+0.8099
+0.8176
+0.8128
+0.8164
+Instruct -Base
+88.77%
+0.3666
+0.3351
+0.8244
+0.8025
+0.8121
+0.8052
+Instruct -FT
+97.95%
+0.5967
+0.6717
+0.9090
+0.9182
+0.9131
+0.9171
+Cross Encoder Nano BEIR
+Dataset: NanoBEIR_R100_mean
+Evaluated with CrossEncoderNanoBEIREvaluator
+Metric	Value
+map	0.3942 (+0.0041)
+mrr@10	0.4486 (-0.0194)
+Ndcg@10	0.4313 (-0.0241)"
+cross-encoder-testing/reranker-bert-tiny-gooaq-bce,text-ranking,https://huggingface.co/cross-encoder-testing/reranker-bert-tiny-gooaq-bce,mrr@10=0.5558; ndcg@10=0.6157; mrr@10=0.4486; ndcg@10=0.4313,"Cross Encoder Reranking
+Datasets: gooaq-dev, NanoMSMARCO, NanoNFCorpus and NanoNQ
+Evaluated with CrossEncoderRerankingEvaluator
+Metric
+gooaq-dev
+NanoMSMARCO
+NanoNFCorpus
+NanoNQ
+map
+0.5677 (+0.0366)
+0.4280 (-0.0616)
+0.3397 (+0.0787)
+0.4149 (-0.0047)
+mrr@10
+0.5558 (+0.0318)
+0.4129 (-0.0646)
+0.5196 (+0.0198)
+0.4132 (-0.0135)
+ndcg@10
+0.6157 (+0.0245)
+0.4772 (-0.0632)
+0.3308 (+0.0058)
+0.4859 (-0.0147)
+"
+teacookies/autotrain-21-12-2022_overspeed_governor-2557878199,token-classification,https://huggingface.co/teacookies/autotrain-21-12-2022_overspeed_governor-2557878199,accuracy=1.0; precision=0.99; recall=0.993; f1=0.992,"Loss: 0.001
+Accuracy: 1.000
+Precision: 0.990
+Recall: 0.993
+F1: 0.992
+"
+teacookies/autotrain-24102022-cert9-1861563662,token-classification,https://huggingface.co/teacookies/autotrain-24102022-cert9-1861563662,accuracy=0.999; precision=0.959; recall=0.969; f1=0.964,"Loss: 0.004
+Accuracy: 0.999
+Precision: 0.959
+Recall: 0.969
+F1: 0.964
+"
+Andrei95/jobbert-skill,token-classification,https://huggingface.co/Andrei95/jobbert-skill,accuracy=0.935; precision=0.299; recall=0.442; f1=0.357,"Loss: 0.175
+Accuracy: 0.935
+Precision: 0.299
+Recall: 0.442
+F1: 0.357
+"
+Tritkoman/EnglishtoChurchSlavonicV1,translation,https://huggingface.co/Tritkoman/EnglishtoChurchSlavonicV1,accuracy=0.935; precision=0.299; recall=0.442; f1=0.357,"Loss: 1.659
+SacreBLEU: 2.851
+Gen len: 18.977
+"
+Tritkoman/GermantoHunsrik,translation,https://huggingface.co/Tritkoman/GermantoHunsrik,sacrebleu=30.765,"Loss: 1.500
+SacreBLEU: 30.765
+Gen len: 10.639
+"
+Tritkoman/English-to-Aramaic-or-Syriac,translation,https://huggingface.co/Tritkoman/English-to-Aramaic-or-Syriac,sacrebleu=0.819,"Loss: 1.098
+SacreBLEU: 0.819
+Gen len: 19.000
+"

@@ -1,0 +1,131 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{cite}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\begin{document}
+	
+	\title{Dise\~no de dos metaheur\'isticas para configurar la extracci\'on de m\'etricas en fichas de modelos de Hugging Face}
+	
+	\author{\IEEEauthorblockN{Juan Felipe Gallo}
+		\IEEEauthorblockA{Maestr\'ia en Ingenier\'ia, Universidad de Antioquia, Medell\'in, Colombia\\
+			Metaheur\'istica 2026-01, Entrega 2}}
+	
+	\maketitle
+	
+	\begin{abstract}
+		Se describe el dise\~no de dos metaheur\'isticas para configurar la etapa de extracci\'on de m\'etricas de un \emph{pipeline} ETL sobre fichas de modelos: un GRASP con b\'usqueda local y memoria de evaluaciones, y un algoritmo gen\'etico. Ambos comparten la representaci\'on de la soluci\'on (reglas ordenadas y un umbral), la funci\'on de evaluaci\'on y el vecindario de movimientos, de modo que difieren solo en la estrategia de b\'usqueda y puedan compararse con el mismo presupuesto de evaluaciones.
+	\end{abstract}
+	
+	\begin{IEEEkeywords}
+		GRASP, algoritmo gen\'etico, optimizaci\'on combinatoria, extracci\'on de informaci\'on.
+	\end{IEEEkeywords}
+	
+	\section{Problema, soluci\'on y evaluaci\'on}
+	
+	\subsection{Representaci\'on}
+	Se dispone de un cat\'alogo de $m$ reglas de extracci\'on; cada una combina un analizador (l\'inea \texttt{nombre: valor}, fila de tabla o columna de tabla) con una familia de m\'etricas. Una soluci\'on es $x=(\pi,\theta)$, donde $\pi$ es una tupla \emph{ordenada} de a lo sumo $K$ reglas distintas y $\theta\in\Theta=\{1,100,1000\}$ es una cota superior de plausibilidad para los valores aceptados. El orden importa: para cada ficha y m\'etrica, la primera regla de $\pi$ que produce un valor gana y las siguientes se descartan para esa m\'etrica.
+	
+	\subsection{Evaluaci\'on}
+	La salida de cada regla sobre cada ficha se calcula una sola vez y se guarda; evaluar una soluci\'on consiste en combinar esas salidas seg\'un $\pi$ y $\theta$. Sobre las fichas con referencia (el bloque \texttt{model-index}, oculto al extractor) se obtienen precisi\'on y cobertura por etiqueta de tarea $\tau\in T$. La aptitud es el $F_1$ macro, $\bar F_1(x)=\frac{1}{|T|}\sum_{\tau}F_{1,\tau}(x)$, sujeto a precisi\'on global $P(x)\ge0{,}90$ y tiempo por ficha $t(x)\le t_{\max}$. Las restricciones son duras: con $v(x)=\max(0,0{,}90-P)+\max(0,t/t_{\max}-1)$,
+	\begin{equation}
+		f(x)=\begin{cases}\bar F_1(x)& v(x)=0,\\ -1-v(x)& v(x)>0.\end{cases}
+	\end{equation}
+	Toda soluci\'on infactible vale menos que cualquier factible, y $v$ conduce la b\'usqueda hacia la regi\'on factible.
+	
+	\subsection{Vecindario}
+	Ambos algoritmos usan los mismos cinco movimientos: \emph{insertar} una regla en una posici\'on, \emph{eliminar} una, \emph{reemplazar} una por otra no usada, \emph{intercambiar} dos posiciones y \emph{cambiar} $\theta$. Con $K=5$ y $m=27$ el vecindario tiene unos 260 elementos.
+	
+	\section{Metaheur\'istica con memoria y aleatoriedad: GRASP}
+	
+	GRASP \cite{feo} alterna una construcci\'on voraz aleatorizada con una b\'usqueda local (Algoritmo~\ref{alg:grasp}).
+	
+	\begin{algorithm}[t]
+		\caption{GRASP con memoria}
+		\label{alg:grasp}
+		\small
+		\begin{algorithmic}[1]
+			\REQUIRE presupuesto $B$, par\'ametro $\alpha$, $K$
+			\STATE $x^\ast\leftarrow\emptyset$
+			\WHILE{evaluaciones reales $<B$}
+			\STATE $\pi\leftarrow()$, $\theta\leftarrow$ aleatorio en $\Theta$
+			\WHILE{$|\pi|<K$}
+			\STATE evaluar todas las inserciones (regla, posici\'on)
+			\STATE $RCL\leftarrow\{c: f(c)\ge f_{\max}-\alpha(f_{\max}-f_{\min})\}$
+			\STATE \textbf{si} ninguna inserci\'on mejora $f(x)$, terminar; si no, elegir $c\in RCL$ al azar y actualizar $\pi$
+			\ENDWHILE
+			\STATE $x\leftarrow$ b\'usqueda local de mejor mejora desde $x$
+			\IF{$f(x)>f(x^\ast)$} \STATE $x^\ast\leftarrow x$ \ENDIF
+			\ENDWHILE
+			\RETURN $x^\ast$
+		\end{algorithmic}
+	\end{algorithm}
+	
+	\textbf{Construcci\'on.} Se parte de una tupla vac\'ia y un $\theta$ al azar. En cada paso se eval\'uan todas las inserciones posibles de reglas no usadas en cualquier posici\'on, y se elige al azar dentro de la lista restringida de candidatos (RCL) definida por $\alpha$: con $\alpha=0$ es un voraz puro y con $\alpha=1$ es aleatorio. Termina al llegar a $K$ reglas o cuando ninguna inserci\'on mejora la aptitud.
+	
+	\textbf{Exploraci\'on.} La b\'usqueda local usa \emph{mejor mejora}: recorre todo el vecindario y se mueve al mejor vecino, hasta un \'optimo local. Se elige esta estrategia porque el vecindario es peque\~no y sus evaluaciones se reutilizan gracias a la memoria.
+	
+	\textbf{Memoria.} Un diccionario guarda cada configuraci\'on evaluada con su aptitud. Los reinicios y la b\'usqueda local no reeval\'uan lo ya visto, y el presupuesto cuenta solo evaluaciones reales.
+	
+	\textbf{Criterio de parada.} Se agota el presupuesto $B$ de evaluaciones reales. Se devuelve la mejor soluci\'on hallada.
+	
+	\textbf{Par\'ametros y valores iniciales.} $\alpha\in[0,1]$, con valor inicial 0,3 y rango a explorar $\{0;0{,}1;0{,}3;0{,}5;0{,}8\}$; $B$ con valor inicial 3.000 y rango $\{500;1500;3000\}$. $K$, $t_{\max}$ y la precisi\'on m\'inima son datos del problema.
+	
+	\section{Metaheur\'istica poblacional: algoritmo gen\'etico}
+	
+	El algoritmo gen\'etico \cite{gendreau} mantiene $N$ soluciones y las mejora mediante selecci\'on, cruce y mutaci\'on (Algoritmo~\ref{alg:ga}).
+	
+	\begin{algorithm}[t]
+		\caption{Algoritmo gen\'etico}
+		\label{alg:ga}
+		\small
+		\begin{algorithmic}[1]
+			\REQUIRE $N$, $p_c$, $p_m$, $e$, presupuesto $B$
+			\STATE inicializar poblaci\'on de $N$ soluciones; evaluarla
+			\WHILE{evaluaciones reales $<B$ \textbf{y} no estancado}
+			\STATE $\mathcal N\leftarrow$ las $e$ mejores (elitismo)
+			\WHILE{$|\mathcal N|<N$}
+			\STATE elegir padres $a,b$ por torneo de tama\~no $k$
+			\STATE con prob. $p_c$: $h\leftarrow$ cruce$(a,b)$; si no, $h\leftarrow a$
+			\STATE con prob. $p_m$: aplicar un movimiento aleatorio a $h$
+			\STATE agregar $h$ a $\mathcal N$ si no es duplicado; evaluar
+			\ENDWHILE
+			\STATE poblaci\'on $\leftarrow\mathcal N$
+			\ENDWHILE
+			\RETURN mejor soluci\'on
+		\end{algorithmic}
+	\end{algorithm}
+	
+	\textbf{Representaci\'on.} La misma $x=(\pi,\theta)$: lista ordenada de a lo sumo $K$ reglas distintas y un umbral.
+	
+	\textbf{Poblaci\'on inicial.} Una fracci\'on $\rho$ de los individuos se construye con la construcci\'on aleatorizada de GRASP ($\alpha=0{,}3$) y el resto se genera al azar, con un tama\~no $k\in\{1,\dots,K\}$, reglas distintas al azar y $\theta$ aleatorio. La mezcla aporta calidad inicial sin perder diversidad.
+	
+	\textbf{Selecci\'on.} Torneo de tama\~no $k_t$ sobre la aptitud $f$; las infactibles quedan por debajo de las factibles.
+	
+	\textbf{Cruce.} Cruce por orden: se elige un punto de corte en el padre $a$, el hijo conserva ese prefijo y completa con las reglas del padre $b$, en el orden de $b$, que a\'un no aparecen, hasta $K$ reglas o agotar las de $b$. El umbral $\theta$ se hereda de uno de los padres con igual probabilidad. El cruce mantiene reglas distintas y respeta la importancia del orden.
+	
+	\textbf{Mutaci\'on.} Con probabilidad $p_m$ se aplica un movimiento aleatorio del vecindario (insertar, eliminar, reemplazar, intercambiar o cambiar $\theta$), lo que mantiene la coherencia con GRASP.
+	
+	\textbf{Reemplazo.} Generacional con elitismo: pasan las $e$ mejores y el resto de la nueva poblaci\'on proviene de los hijos. No se admiten individuos duplicados; si un hijo ya existe, se muta de nuevo.
+	
+	\textbf{Memoria.} Se usa la misma cach\'e de evaluaciones que en GRASP.
+	
+	\textbf{Criterio de parada.} Se agota el presupuesto $B$ de evaluaciones reales, igual al de GRASP, o la mejor aptitud no mejora en $G$ generaciones consecutivas.
+	
+	\textbf{Par\'ametros y valores iniciales.} $N=50$ (rango $\{30,50,100\}$); $p_c=0{,}9$ (rango $\{0{,}7;0{,}9\}$); $p_m=0{,}2$ (rango $\{0{,}1;0{,}2;0{,}4\}$); $k_t=3$; $e=2$; $\rho=0{,}2$; $G=15$; $B=3000$.
+	
+	\section{Comparaci\'on prevista}
+	Los dos algoritmos se comparar\'an con el mismo presupuesto de evaluaciones, las mismas instancias y r\'eplicas con semillas distintas, adem\'as de una l\'inea base voraz y una b\'usqueda aleatoria. Sus resultados se contrastar\'an con una prueba estad\'istica pareada sobre las r\'eplicas, y en instancias peque\~nas con la enumeraci\'on exacta como referencia de optimalidad.
+	
+	\begin{thebibliography}{1}
+		\bibitem{feo} T. A. Feo and M. G. C. Resende, ``Greedy randomized adaptive search procedures,'' \emph{J. Global Optim.}, vol. 6, no. 2, pp. 109--133, 1995.
+		\bibitem{gendreau} M. Gendreau and J.-Y. Potvin, Eds., \emph{Handbook of Metaheuristics}, 3rd ed. Cham, Switzerland: Springer, 2019.
+	\end{thebibliography}
+	
+\end{document}
