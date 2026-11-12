@@ -84,7 +84,7 @@
 	\section{Experimentos}
 	
 	\subsection{Instancias}
-	Se descargaron 1.931 de 2.057 fichas; 126 no fueron accesibles (94 con error 403 y 32 con 404). La referencia es el \texttt{model-index} de 390 fichas con valores num\'ericos, oculto al extractor (se elimina el bloque YAML inicial). La partici\'on se hizo por organizaci\'on. El supuesto de representatividad de la Entrega 1 result\'o falso: las fichas con m\'etricas en el ETL son sobre todo de similitud de oraciones y extracci\'on de caracter\'isticas, y las 1.533 sin ellas son en su mayor\'ia AutoTrain. Por eso se a\~nadi\'o una muestra manual de 36 fichas sin referencia, proporcional por etiqueta. Las instancias son:
+	Se descargaron 1.931 de 2.057 fichas; 126 no fueron accesibles (94 con error 403 y 32 con 404). La referencia es el \texttt{model-index} de 390 fichas con valores num\'ericos, oculto al extractor (se elimina el bloque YAML inicial). La partici\'on se hizo por organizaci\'on. El supuesto de representatividad de la Entrega 1 no se cumplió, dado que las fichas con m\'etricas en el ETL son principalmente de similitud de oraciones y extracci\'on de caracter\'isticas, y las 1.533 sin ellas son en su mayor\'ia AutoTrain. Por eso se a\~nadi\'o una muestra manual de 36 fichas sin referencia, proporcional por etiqueta. Las instancias son:
 	\begin{itemize}
 		\item \textbf{Peque\~na con \'optimo exacto:} subcat\'alogo de 12 reglas, $K=4$.
 		\item \textbf{Cat\'alogo completo:} 27 reglas, $K\in\{3,4,5,6\}$, con $t_{\max}\in\{30,50,80\}$\,ms o sin l\'imite.
@@ -92,7 +92,7 @@
 	\end{itemize}
 	
 	\subsection{Ajuste de par\'ametros}
-	Se ajustaron $\alpha\in\{0;0{,}1;0{,}3;0{,}5;0{,}8\}$ y el presupuesto $\in\{500;1500;3000\}$ evaluaciones, con 6 semillas por combinaci\'on, sobre 338 fichas de entrenamiento ($K=5$, $t_{\max}=80$\,ms). El criterio fue la aptitud media (Tabla~\ref{tab:ajuste}). Se eligi\'o $\alpha=0{,}3$ y 3.000 evaluaciones (0,420). Con 500 evaluaciones no se completa una iteraci\'on (la primera cuesta unas 700). De 1.500 en adelante hay meseta, y para $\alpha\ge0{,}1$ la diferencia es menor que 0,004; $\alpha=0$ (voraz m\'as b\'usqueda local) queda ligeramente por debajo.
+	Se ajustaron $\alpha\in\{0;0{,}1;0{,}3;0{,}5;0{,}8\}$ y el presupuesto $\in\{500;1500;3000\}$ evaluaciones, con 6 semillas por combinaci\'on, sobre 338 fichas de entrenamiento ($K=5$, $t_{\max}=80$\,ms). El criterio fue la aptitud media (Tabla~\ref{tab:ajuste}). Se eligi\'o $\alpha=0{,}3$ y 3.000 evaluaciones (0,420). Con 500 evaluaciones no se completa una iteraci\'on (la primera cuesta unas 700). De 1.500 en adelante se alcanza el umbral, y para $\alpha\ge0{,}1$ la diferencia es menor que 0,004; $\alpha=0$ (voraz m\'as b\'usqueda local) queda ligeramente por debajo.
 	
 	\begin{table}[t]
 		\centering
@@ -113,7 +113,7 @@
 	\end{table}
 	
 	\subsection{Protocolo}
-	Presupuesto de 3.000 evaluaciones (1.000 en la instancia peque\~na). R\'eplicas: 5 semillas en la instancia peque\~na y con restricci\'on de tiempo, 10 en la curva de convergencia y 3 por pliegue en validaci\'on cruzada. Se reportan $\bar F_1$, precisi\'on, cobertura, tiempo y factibilidad. El hardware y los tiempos son los de esta implementaci\'on en Python.
+	Presupuesto de 3.000 evaluaciones (1.000 en la instancia peque\~na). R\'eplicas: 5 semillas en la instancia peque\~na y con restricci\'on de tiempo, 10 en la curva de convergencia y 3 por pliegue en validaci\'on cruzada. Se reportan $\bar F_1$, precisi\'on, cobertura, tiempo y factibilidad.
 	
 	\subsection{Desviaciones respecto a la Entrega 1}
 	El cat\'alogo tiene 27 reglas y no entre 40 y 60. Se probaron $K\in\{3,4,5,6\}$ y no $\{5,10,15\}$, y solo la precisi\'on m\'inima de 0,90 (no 0,85 y 0,95). La referencia son 390 fichas con valores num\'ericos y no 401, y la tabla de homologaci\'on se sustituy\'o por una normalizaci\'on can\'onica de nombres. No se escalaron subconjuntos de 50, 100 y 200 fichas ni subcat\'alogos de 20 y 40 reglas; en su lugar hay una instancia peque\~na con \'optimo exacto y una validaci\'on cruzada por organizaci\'on. La l\'inea base ya no es la cascada actual, que solo lee metadatos, sino los m\'etodos voraces y la b\'usqueda aleatoria sobre las mismas reglas. El supuesto de representatividad no se sostuvo, como se indic\'o arriba.
@@ -222,4 +222,4 @@
 		\bibitem{wilson} E. B. Wilson, ``Probable inference, the law of succession, and statistical inference,'' \emph{J. Amer. Statist. Assoc.}, vol. 22, no. 158, pp. 209--212, 1927.
 	\end{thebibliography}
 	
-\end{document}
+\end{document}	
