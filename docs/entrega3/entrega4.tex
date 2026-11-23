@@ -24,7 +24,7 @@
 	\maketitle
 	
 	\begin{abstract}
-		Se implementa un algoritmo gen\'etico (AG) para configurar la etapa de extracci\'on de m\'etricas de un \emph{pipeline} ETL sobre fichas de modelos: qu\'e reglas de un cat\'alogo de 27 activar, en qu\'e orden y con qu\'e umbral, para maximizar el $F_1$ macro por tarea con a lo sumo $K$ reglas y precisi\'on m\'inima de 0,90. El AG se ajusta con una rejilla de 18 configuraciones y 10 r\'eplicas, y se compara con el GRASP de la Entrega 3, un voraz constructivo y una b\'usqueda aleatoria, con 30 r\'eplicas y el mismo presupuesto, mediante pruebas no param\'etricas (Kruskal--Wallis, Mann--Whitney con correcci\'on de Holm, Friedman y Wilcoxon pareado). Con $K=5$ y $K=6$ el voraz, GRASP y el AG alcanzan el mismo valor (0,3401 y 0,3572); GRASP lo reproduce en las 60 r\'eplicas, el AG en 51 de 60 y la b\'usqueda aleatoria en ninguna. La diferencia entre el AG y GRASP es estad\'isticamente detectable pero peque\~na (como m\'aximo 0,009), y el voraz llega al mismo valor con 367 evaluaciones frente a unas 3.100 de GRASP. En validaci\'on cruzada por organizaci\'on los tres m\'etodos coinciden en los cinco pliegues. Solo el tamaño de población influye en el AG: óptimo en el 88 \% de las corridas con N=100 y en el 48 \% con N=30, a cambio de más evaluaciones. Como el voraz ya obtiene el óptimo, en esta instancia las metaheurísticas solo pueden igualarlo.
+		Se implementa un algoritmo gen\'etico (AG) para configurar la etapa de extracci\'on de m\'etricas de un \emph{pipeline} ETL sobre fichas de modelos de IA donde se encuentran sus métricas de performance: qu\'e reglas de un cat\'alogo de 27 activar, en qu\'e orden y con qu\'e umbral, para maximizar el $F_1$ macro por tarea con a lo sumo $K$ reglas y precisi\'on m\'inima de 0,90. El AG se ajusta con una base de 18 configuraciones y 10 r\'eplicas, y se compara con el GRASP de la entrega anterior, un voraz constructivo y una b\'usqueda aleatoria, con 30 r\'eplicas y el mismo presupuesto, mediante pruebas no param\'etricas (Kruskal--Wallis, Mann--Whitney con correcci\'on de Holm, Friedman y Wilcoxon pareado). Con $K=5$ y $K=6$ el voraz, GRASP y el AG alcanzan el mismo valor (0,3401 y 0,3572); GRASP lo reproduce en las 60 r\'eplicas, el AG en 51 de 60 y la b\'usqueda aleatoria en ninguna. La diferencia entre el AG y GRASP es estad\'isticamente detectable pero peque\~na (como m\'aximo 0,009), y el voraz llega al mismo valor con 367 evaluaciones frente a unas 3.100 de GRASP. En validaci\'on cruzada por organizaci\'on los tres m\'etodos coinciden en los cinco pliegues. Solo el tamaño de población influye en el AG: óptimo en el 88 \% de las corridas con N=100 y en el 48 \% con N=30, a cambio de más evaluaciones. Como el voraz ya obtiene el óptimo, en esta instancia las metaheurísticas solo pueden igualarlo.
 	\end{abstract}
 	
 	\begin{IEEEkeywords}
@@ -34,7 +34,7 @@
 	\section{Implementaci\'on}
 	
 	\subsection{Problema y base de la Entrega 3}
-	Cada ficha de modelo (\emph{model card}) \cite{mitchell} puede traer m\'etricas en el bloque \texttt{model-index} y en tablas y l\'ineas del cuerpo. El ETL \cite{repo} solo lee los metadatos. Se configura una etapa de recuperaci\'on sobre el cuerpo: una soluci\'on es $x=(\pi,\theta)$, con $\pi$ una tupla ordenada de a lo sumo $K$ reglas distintas de un cat\'alogo de $m=27$ (3 analizadores $\times$ 9 familias de m\'etricas) y $\theta\in\{1,100,1000\}$ una cota de plausibilidad. Para cada ficha y m\'etrica, la primera regla de $\pi$ que la produce gana. La aptitud es el $F_1$ macro por \texttt{pipeline\_tag} sobre 390 fichas con referencia (el \texttt{model-index}, oculto al extractor), con restricciones duras de precisi\'on $P\ge0{,}90$ y, opcionalmente, de tiempo por ficha: $f(x)=\bar F_1(x)$ si es factible y $-1-v(x)$ si no. Las salidas de las reglas se precalculan, de modo que evaluar una configuraci\'on cuesta 3,3\,ms, y una cach\'e guarda cada configuraci\'on evaluada: el presupuesto cuenta solo evaluaciones reales. Esta Entrega reutiliza esa infraestructura, el vecindario de cinco movimientos (insertar, eliminar, reemplazar, intercambiar, cambiar $\theta$) y la construcci\'on aleatorizada de GRASP \cite{feo}.
+	Durante la estapa de extracción del ETL\cite{repo}, sólo se leen los metadatos estandarizados que provienen de la documentación de Hugging Face. Cada ficha de modelo (\emph{model card}) \cite{mitchell} puede traer m\'etricas en el bloque \texttt{model-index} y en tablas y l\'ineas del cuerpo. Se configura una etapa de recuperaci\'on sobre el cuerpo: una soluci\'on es $x=(\pi,\theta)$, con $\pi$ una tupla ordenada de a lo sumo $K$ reglas distintas de un cat\'alogo de $m=27$ (3 analizadores $\times$ 9 familias de m\'etricas) y $\theta\in\{1,100,1000\}$ una cota de plausibilidad. Para cada ficha y m\'etrica, la primera regla de $\pi$ que la produce gana. La aptitud es el $F_1$ macro por \texttt{pipeline\_tag} sobre 390 fichas con referencia (el \texttt{model-index}, oculto al extractor), con restricciones duras de precisi\'on $P\ge0{,}90$ y, opcionalmente, de tiempo por ficha: $f(x)=\bar F_1(x)$ si es factible y $-1-v(x)$ si no. Las salidas de las reglas se precalculan, de modo que evaluar una configuraci\'on cuesta 3,3\,ms, y una cach\'e guarda cada configuraci\'on evaluada: el presupuesto cuenta solo evaluaciones reales. Esta Entrega reutiliza esa infraestructura, el vecindario de cinco movimientos (insertar, eliminar, reemplazar, intercambiar, cambiar $\theta$) y la construcci\'on aleatorizada de GRASP \cite{feo}.
 	
 	\subsection{Algoritmo gen\'etico}
 	La implementaci\'on sigue el dise\~no de la Entrega 2 \cite{gendreau,goldberg} y est\'a en el m\'odulo \texttt{genetic}; \texttt{stats} contiene las pruebas estad\'isticas y \texttt{experiments} los protocolos de comparaci\'on, ajuste y validaci\'on cruzada. Los componentes son:
@@ -45,7 +45,7 @@
 	
 	\textbf{Cruce.} Cruce por orden \cite{davis}: el hijo conserva un prefijo del padre $a$ (corte aleatorio) y se completa con las reglas del padre $b$ que faltan, en el orden de $b$, hasta $K$; $\theta$ se hereda de uno de los dos padres. Se aplica con probabilidad $p_c$.
 	
-	\textbf{Mutaci\'on.} Con probabilidad $p_m$ se aplica un movimiento aleatorio del vecindario, el mismo de GRASP. Si el hijo ya est\'a en la poblaci\'on nueva, se muta de nuevo (hasta 5 veces).
+	\textbf{Mutaci\'on.} Con probabilidad $p_m$ se aplica un movimiento aleatorio del vecindario, el mismo de GRASP. Si el hijo ya est\'a en la poblaci\'on nueva, se muta de nuevo hasta 5 veces.
 	
 	\textbf{Reemplazo y memoria.} Generacional con elitismo ($e=2$). La cach\'e es la de GRASP, y el presupuesto cuenta evaluaciones reales.
 	
@@ -69,36 +69,36 @@
 		\end{tabular}
 	\end{table}
 	
-	\subsection{Desviaciones respecto al dise\~no}
-	(i)~La siembra con GRASP no puede gastar m\'as del 25\,\% del presupuesto: una construcci\'on cuesta unas 365 evaluaciones con $K=5$ y $\rho N=20$ construcciones agotar\'ian el presupuesto antes de la primera generaci\'on. En la pr\'actica solo se siembran los que caben en ese tope. (ii)~La parada por estancamiento ($G=15$) puede detener al AG antes de agotar el presupuesto. (iii)~$k_t$, $e$, $\rho$ y $G$ se fijaron en los valores iniciales sin ajustarlos.
+	\subsection{Desviaciones respecto al diseñoo}
+	La siembra con GRASP no puede gastar m\'as del 25\,\% del presupuesto: una construcci\'on cuesta unas 365 evaluaciones con $K=5$ y $\rho N=20$ construcciones agotar\'ian el presupuesto antes de la primera generaci\'on. En la pr\'actica solo se siembran los que caben en ese tope. La parada por estancamiento ($G=15$) puede detener al AG antes de agotar el presupuesto.$k_t$, $e$, $\rho$ y $G$ se fijaron en los valores iniciales sin ajustarlos.
 	
 	\section{Experimentos}
 	
 	\subsection{Instancia y m\'etodos}
-	Se usa la instancia del cat\'alogo completo de la Entrega 3: 27 reglas, 390 fichas de referencia, $K\in\{5,6\}$ y sin l\'imite de tiempo. Se comparan cuatro m\'etodos: voraz constructivo, b\'usqueda aleatoria, GRASP ($\alpha=0{,}3$) y AG, los tres \'ultimos con presupuesto de 3.000 evaluaciones. Hay dos particularidades: GRASP no interrumpe una construcci\'on ni un barrido del vecindario al llegar al presupuesto, y por eso lo excede (media de 3.089 y 3.146 evaluaciones; m\'aximo 3.434), y la b\'usqueda aleatoria toma 3.000 muestras, de las cuales solo unas 2.400 son configuraciones distintas.
+	Se usa la instancia del cat\'alogo completo de la Entrega 3: 27 reglas, 390 fichas de referencia, $K\in\{5,6\}$ y sin l\'imite de tiempo. Se comparan cuatro m\'etodos: voraz constructivo, b\'usqueda aleatoria, GRASP ($\alpha=0{,}3$) y AG, los tres \'ultimos con presupuesto de 3.000 evaluaciones. En el caso de GRASP, no se interrumpe una construcción ni un barrido del vecindario al llegar al presupuesto, y por eso lo excede con una media de 3.089 y 3.146 evaluaciones; m\'aximo 3.434, y la b\'usqueda aleatoria toma 3.000 muestras, de las cuales solo unas 2.400 son configuraciones distintas.
 	
 	\subsection{Ajuste del AG}
-	Rejilla completa $N\times p_c\times p_m$ (18 configuraciones), 10 r\'eplicas por configuraci\'on con semillas 1000--1009, $K=5$. El ajuste usa la misma instancia que la comparaci\'on final, con semillas distintas.
+	Base completa $N\times p_c\times p_m$ de 18 configuraciones, 10 r\'eplicas por configuraci\'on con semillas 1000--1009, $K=5$. El ajuste usa la misma instancia que la comparaci\'on final, con semillas distintas.
 	
 	\subsection{Comparaci\'on y validaci\'on cruzada}
-	Comparaci\'on con 30 r\'eplicas (semillas 0--29) para $K=5$ y $K=6$. Validaci\'on cruzada con 5 pliegues por organizaci\'on, equilibrados por fichas (236, 39, 39, 38 y 38): en cada pliegue se optimiza con los otros cuatro y se mide en el reservado ($K=5$, sin l\'imite de tiempo, 10 r\'eplicas por m\'etodo). Este protocolo difiere del de la Entrega 3 (que impon\'ia 80\,ms por ficha), de modo que sus cifras no son comparables entre s\'i.
+	Comparaci\'on con 30 r\'eplicas con semillas 0--29 para $K=5$ y $K=6$. Validaci\'on cruzada con 5 pliegues por organizaci\'on, equilibrados por fichas (236, 39, 39, 38 y 38): en cada pliegue se optimiza con los otros cuatro y se mide en el reservado ($K=5$), sin l\'imite de tiempo, 10 r\'eplicas por m\'etodo.
 	
 	\section{An\'alisis de desempe\~no y ajuste de par\'ametros}
 	
 	\subsection{Prop\'osito y elecci\'on de las pruebas}
-	Las pruebas cumplen dos fines: decidir si los par\'ametros del AG afectan su desempe\~no, y comparar los algoritmos de las Entregas 3 y 4. Se usan pruebas no param\'etricas porque muchas r\'eplicas devuelven exactamente el mismo valor, con varianza nula en GRASP, adaemás hay 10 a 30 observaciones por grupo, lo que no permite suponer normalidad ni homogeneidad de varianzas, como exigir\'ia un ANOVA.
+	A partir de las pruebas, se decide si los par\'ametros del AG afectan su desempeño, y se comparan los algoritmos de las Entregas 3 y 4. Se usan pruebas no param\'etricas porque muchas r\'eplicas devuelven exactamente el mismo valor, con varianza nula en GRASP, 10 a 30 observaciones por grupo, lo que no permite suponer normalidad ni homogeneidad de varianzas, como exigir\'ia un ANOVA.
 	\begin{itemize}
 		\item \textbf{Kruskal--Wallis} \cite{kruskal}: compara $k$ grupos independientes. Se usa para el ajuste 18 configuraciones, cada par\'ametro por separado y para los tres m\'etodos estoc\'asticos.
 		\item \textbf{Mann--Whitney} \cite{mann} con correcci\'on de Holm \cite{holm}: comparaciones por pares entre m\'etodos. Las semillas de un m\'etodo no est\'an emparejadas con las de otro, de modo que las r\'eplicas son independientes. El tama\~no de efecto es $\delta$ de Cliff \cite{cliff}, $P(A>B)-P(A<B)$.
-		\item \textbf{Wilcoxon de una muestra} contra el valor fijo del voraz (determinista), con Holm.
+		\item \textbf{Wilcoxon de una muestra} contra el valor fijo del voraz determinista, con Holm.
 		\item \textbf{Friedman} \cite{friedman,demsar} y \textbf{Wilcoxon pareado} con Holm en la validaci\'on cruzada, donde los pliegues s\'i son bloques reales; se agrega cada pliegue con la mediana de sus r\'eplicas.
 	\end{itemize}
-	La implementación se realizó en la librera SciPy \cite{scipy} de Python; la correcci\'on de Holm, el $\delta$ de Cliff y los intervalos \emph{bootstrap} (10.000 remuestreos) est\'an en el m\'odulo \texttt{stats}. Se usa $\alpha=0{,}05$ y los valores $p$ son bilaterales.
+	La implementación se realizó en la librera SciPy \cite{scipy} de Python; la correcci\'on de Holm, el $\delta$ de Cliff y los intervalos \emph{bootstrap} con 10.000 remuestreos est\'an en el m\'odulo \texttt{stats}. Se usa $\alpha=0{,}05$ y los valores $p$ son bilaterales.
 	
 	\subsection{Ajuste de par\'ametros}
 	La Tabla~\ref{tab:ajuste} resume el ajuste por tama\~no de poblaci\'on. El \'optimo de la instancia ($K=5$) es 0,3401. Kruskal--Wallis entre las 18 configuraciones da $H=37{,}4$ ($p=0{,}003$). Por par\'ametro, el tama\~no de poblaci\'on es el \'unico con efecto ($H=26{,}1$, $p<0{,}001$), mientras que $p_c$ ($H=0{,}06$; $p=0{,}81$) y $p_m$ ($H=0{,}05$; $p=0{,}97$) no tienen efecto detectable. Las cuatro configuraciones con $N=100$ y $p_m\ge0{,}2$ alcanzan 0,3401 en las 10 r\'eplicas. Se fij\'o $N=100$ y, entre esas cuatro, $p_c=\pcsel$ y $p_m=\pmsel$, que son estad\'isticamente equivalentes.
 	
-	La mejora con $N$ tiene costo: de 1.469 a 2.430 evaluaciones y de 2,9 a 5,3\,s por corrida. Adem\'as, el efecto est\'a confundido con el criterio de parada: $G$ se mide en generaciones, y una poblaci\'on mayor eval\'ua m\'as configuraciones antes de declarar estancamiento. Con el dise\~no actual no es posible separar ambos efectos.
+	El costo de la mejora con $N$ es de 1.469 a 2.430 evaluaciones y de 2,9 a 5,3\,s por corrida. Adem\'as, el efecto est\'a confundido con el criterio de parada: $G$ se mide en generaciones, y una poblaci\'on mayor eval\'ua m\'as configuraciones antes de declarar estancamiento. Con el dise\~no actual no es posible separar ambos efectos.
 	
 	\begin{table}[t]
 		\centering
@@ -144,7 +144,7 @@
 	
 	\begin{table}[t]
 		\centering
-		\caption{Pruebas por pares: $p$ ajustado por Holm y $\delta$ de Cliff (primer m\'etodo frente al segundo; $\delta>0$ favorece al primero)}
+		\caption{Pruebas por pares: $p$ ajustado por Holm y $\delta$ de Cliff}
 		\label{tab:pares}
 		\footnotesize
 		\begin{tabular}{lcccc}
@@ -169,7 +169,7 @@
 	
 	\begin{table}[t]
 		\centering
-		\caption{Validaci\'on cruzada por organizaci\'on, $K=5$ (mediana de 10 r\'eplicas del $\bar F_1$ en el pliegue reservado)}
+		\caption{Validaci\'on cruzada por organizaci\'on, $K=5$, mediana de 10 r\'eplicas del $\bar F_1$ en el pliegue reservado}
 		\label{tab:cv}
 		\footnotesize
 		\begin{tabular}{lccccc}
@@ -203,7 +203,7 @@
 	Las 30 soluciones de GRASP con $K=5$ son el mismo conjunto de cinco reglas \texttt{clf\_basic} en l\'inea y en columna, \texttt{at\_k} en fila, \texttt{rouge} y \texttt{rank} en l\'inea, con 28 \'ordenes distintos y $\theta\in\{100,1000\}$. Con $K=6$ se a\~nade \texttt{clf\_avg} en l\'inea con un conjunto de 30 \'ordenes. El AG produce 3 y 4 conjuntos distintos, y todas sus corridas por debajo del \'optimo terminaron antes de agotar el presupuesto entre 1.909 y 2.658 evaluaciones: lo detuvo el criterio de estancamiento. Las tres corridas que agotaron las 3.000 evaluaciones alcanzaron el \'optimo.
 	
 	\subsection{Pliegue grande}
-	En el pliegue 0 (la organizaci\'on dominante, 236 fichas) la soluci\'on \'optima en entrenamiento da 0,538 en prueba, y dos de las diez r\'eplicas del AG, con aptitud de entrenamiento algo menor (0,292 frente a 0,295), llegan a 0,683, y tres de las diez de la aleatoria superan 0,55. Son pocas r\'eplicas, pero indican que el \'optimo de entrenamiento no es el mejor fuera de muestra.
+	En el pliegue 0 el cuál pertenece a la organizaci\'on dominante, 236 fichas, la soluci\'on \'optima en entrenamiento da 0,538 en prueba, y dos de las diez r\'eplicas del AG, con aptitud de entrenamiento algo menor (0,292 frente a 0,295), llegan a 0,683, y tres de las diez de la aleatoria superan 0,55. Son pocas r\'eplicas, pero indican que el \'optimo de entrenamiento no es el mejor fuera de muestra.
 	
 
 	\section{An\'alisis y conclusiones}
